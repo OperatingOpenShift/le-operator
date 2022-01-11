@@ -1,0 +1,20 @@
+# permissions for end users to view encrypteddomains.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: encrypteddomain-viewer-role
+rules:
+- apiGroups:
+  - letsencrypt.operatingopenshift.org
+  resources:
+  - encrypteddomains
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - letsencrypt.operatingopenshift.org
+  resources:
+  - encrypteddomains/status
+  verbs:
+  - get

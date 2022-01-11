@@ -1,0 +1,19 @@
+domain: operatingopenshift.org
+layout:
+- go.kubebuilder.io/v3
+plugins:
+  manifests.sdk.operatorframework.io/v2: {}
+  scorecard.sdk.operatorframework.io/v2: {}
+projectName: le-operator
+repo: github.com/NautiluX/mockstruct
+resources:
+- api:
+    crdVersion: v1
+    namespaced: true
+  controller: true
+  domain: operatingopenshift.org
+  group: letsencrypt
+  kind: EncryptedDomain
+  path: github.com/NautiluX/mockstruct/api/v1beta1
+  version: v1beta1
+version: "3"

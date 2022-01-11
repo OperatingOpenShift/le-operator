@@ -1,0 +1,6 @@
+apiVersion: letsencrypt.operatingopenshift.org/v1beta1
+kind: EncryptedDomain
+metadata:
+  name: encrypteddomain-sample
+spec:
+  # Add fields here
