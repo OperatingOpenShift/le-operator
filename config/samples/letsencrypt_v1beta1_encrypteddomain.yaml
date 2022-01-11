@@ -2,5 +2,9 @@ apiVersion: letsencrypt.operatingopenshift.org/v1beta1
 kind: EncryptedDomain
 metadata:
   name: encrypteddomain-sample
+  namespace: default
 spec:
-  # Add fields here
+  matchingHostnames: "^highscore-default.apps-crc.testing$"
+  caDir: "https://pebble:14000/dir"
+  caDirInsecureSSL: true
+  RegistrationMail: "le-operator@operatingopenshift.org"

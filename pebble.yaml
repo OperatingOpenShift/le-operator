@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    deployment.kubernetes.io/revision: "2"
+  labels:
+    app: pebble
+  name: pebble
+  namespace: le-operator-system
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: pebble
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: pebble
+    spec:
+      containers:
+      - env:
+        - name: PEBBLE_VA_NOSLEEP
+          value: "1"
+        image: letsencrypt/pebble
+        imagePullPolicy: Always
+        name: pebble
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      terminationGracePeriodSeconds: 30
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: pebble
+  name: pebble
+  namespace: le-operator-system
+spec:
+  ports:
+  - name: management
+    port: 15000
+  - name: acme
+    port: 14000
+  selector:
+    app: pebble

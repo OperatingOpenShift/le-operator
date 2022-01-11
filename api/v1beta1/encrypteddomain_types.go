@@ -32,7 +32,10 @@ type EncryptedDomainSpec struct {
 	MatchingHostnames string `json:"matchingHostnames,omitempty"`
 
 	// CA directory Endpoint to use for certificate requests
-	CADir string `json:"acmeEndpoint,omitempty"`
+	CADir string `json:"caDir,omitempty"`
+
+	// Ignore invalid SSL certificate on CADir
+	CADirInsecureSSL bool `json:"caDirInsecureSSL,omitempty"`
 
 	// Mail address to use for registration with CA directory
 	RegistrationMail string `json:"registrationMail,omitempty"`

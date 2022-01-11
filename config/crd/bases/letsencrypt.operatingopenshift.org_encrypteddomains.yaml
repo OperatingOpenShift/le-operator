@@ -36,13 +36,35 @@ spec:
           spec:
             description: EncryptedDomainSpec defines the desired state of EncryptedDomain
             properties:
-              foo:
-                description: Foo is an example field of EncryptedDomain. Edit encrypteddomain_types.go
-                  to remove/update
+              caDir:
+                description: CA directory Endpoint to use for certificate requests
+                type: string
+              caDirInsecureSSL:
+                description: Ignore invalid SSL certificate on CADir
+                type: boolean
+              matchingHostnames:
+                description: MatchingHostnames is a regex describing which hostnames
+                  to generate certificates for.
+                type: string
+              registrationMail:
+                description: Mail address to use for registration with CA directory
                 type: string
             type: object
           status:
             description: EncryptedDomainStatus defines the observed state of EncryptedDomain
+            properties:
+              generatedCertificate:
+                items:
+                  properties:
+                    certificate:
+                      format: byte
+                      type: string
+                    hostname:
+                      type: string
+                  type: object
+                type: array
+              privateKey:
+                type: string
             type: object
         type: object
     served: true
