@@ -4,6 +4,10 @@ This is a noperator to auomatically renew certificates of OpenShift routes.
 
 It's currently not considered production-ready and is only built to show-case how simple it is to implement such an operator with [Operator SDK](https://sdk.operatorframework.io/) and [lego](https://github.com/go-acme/lego).
 
+However, it seems to do its job so feel free to use and improve it!
+
+Currently, the only supported challenge is [HTTP-01](https://letsencrypt.org/docs/challenge-types/#http-01-challenge) which means your cluster needs to be reachable from the internet.
+
 # Usage
 
 Install to your cluster by running `make docker-build docker-push deploy IMG=your/docker-repository`, where you specify the image registry to push to with the `IMG` variable.
