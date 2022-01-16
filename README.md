@@ -50,3 +50,30 @@ spec:
   caDir: "https://pebble:14000/dir"
   RegistrationMail: "le-operator@operatingopenshift.org"
 ```
+
+# Workflow
+
+## EncryptedDomain controller
+
+Location: [controllers/encrypteddomain_controller.go](https://github.com/OperatingOpenShift/le-operator/blob/main/controllers/encrypteddomain_controller.go)
+
+This controller figures out which domains match the regex in the CR definition and generates a new certificate if none of the existing certificates match the hostname, or if they are close to expiry.
+
+The private key used by the operator for each EncryptedDomain as well as all requested certificates are stored in the [CR status](https://github.com/OperatingOpenShift/le-operator/blob/f56c62f503a433ec1a15944b87bebb90601f2aec/api/v1beta1/encrypteddomain_types.go#L45).
+
+For each route it tries to manage, the controller will first iterate over all existing EncryptedDomain CRs to figure if any of those already manages the route hostname to avoid conflicts and race conditions.
+
+If a matching certificate is found for the route, the operator will use it and upate the route CR.
+
+For certificate renewal, the [HTTP-01 challenge](https://letsencrypt.org/docs/challenge-types/#http-01-challenge) is used.
+
+Lego will start a web server for the challenge, the operator creates a service, route, and proxy pod in the route namespace to forward challenge traffic to the web service.
+
+When a new certificate is received, the operator will store it in the status and update the route CR.
+
+
+## Route controller
+
+Location: [controllers/encrypteddomain_controller.go](https://github.com/OperatingOpenShift/le-operator/blob/main/controllers/route.go)
+
+This controller will check routes in the OpenShift cluster for matching EncryptedDomains and update the route with existing certificates or request new certificates, as described above.
