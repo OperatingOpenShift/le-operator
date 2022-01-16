@@ -30,7 +30,7 @@ import (
 	logf "sigs.k8s.io/controller-runtime/pkg/log"
 	"sigs.k8s.io/controller-runtime/pkg/log/zap"
 
-	letsencryptv1beta1 "github.com/NautiluX/mockstruct/api/v1beta1"
+	letsencryptv1beta1 "github.com/operatingopenshift/le-operator/api/v1beta1"
 	//+kubebuilder:scaffold:imports
 )
 

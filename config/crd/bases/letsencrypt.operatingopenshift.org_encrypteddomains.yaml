@@ -54,15 +54,16 @@ spec:
             description: EncryptedDomainStatus defines the observed state of EncryptedDomain
             properties:
               generatedCertificate:
-                items:
+                additionalProperties:
                   properties:
                     certificate:
-                      format: byte
                       type: string
                     hostname:
                       type: string
+                    key:
+                      type: string
                   type: object
-                type: array
+                type: object
               privateKey:
                 type: string
             type: object

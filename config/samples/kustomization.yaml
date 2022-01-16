@@ -1,4 +1,5 @@
 ## Append samples you want in your CSV to this file as resources ##
 resources:
 - letsencrypt_v1beta1_encrypteddomain.yaml
+- route.openshift.io_v1_route.yaml
 #+kubebuilder:scaffold:manifestskustomizesamples

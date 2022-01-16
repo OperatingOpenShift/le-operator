@@ -35,8 +35,8 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/healthz"
 	"sigs.k8s.io/controller-runtime/pkg/log/zap"
 
-	letsencryptv1beta1 "github.com/NautiluX/mockstruct/api/v1beta1"
-	"github.com/NautiluX/mockstruct/controllers"
+	letsencryptv1beta1 "github.com/operatingopenshift/le-operator/api/v1beta1"
+	"github.com/operatingopenshift/le-operator/controllers"
 	//+kubebuilder:scaffold:imports
 )
 
@@ -93,6 +93,13 @@ func main() {
 		Scheme: mgr.GetScheme(),
 	}).SetupWithManager(mgr); err != nil {
 		setupLog.Error(err, "unable to create controller", "controller", "EncryptedDomain")
+		os.Exit(1)
+	}
+	if err = (&controllers.RouteReconciler{
+		Client: mgr.GetClient(),
+		Scheme: mgr.GetScheme(),
+	}).SetupWithManager(mgr); err != nil {
+		setupLog.Error(err, "unable to create controller", "controller", "Route")
 		os.Exit(1)
 	}
 	//+kubebuilder:scaffold:builder

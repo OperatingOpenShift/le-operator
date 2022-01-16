@@ -43,13 +43,14 @@ type EncryptedDomainSpec struct {
 
 // EncryptedDomainStatus defines the observed state of EncryptedDomain
 type EncryptedDomainStatus struct {
-	GeneratedCertificates []GeneratedCertificate `json:"generatedCertificate,omitempty"`
-	PrivateKey            string                 `json:"privateKey,omitempty"`
+	GeneratedCertificates map[string]GeneratedCertificate `json:"generatedCertificate,omitempty"`
+	PrivateKey            string                          `json:"privateKey,omitempty"`
 }
 
 type GeneratedCertificate struct {
 	Hostname    string `json:"hostname,omitempty"`
-	Certificate []byte `json:"certificate,omitempty"`
+	Certificate string `json:"certificate,omitempty"`
+	Key         string `json:"key,omitempty"`
 }
 
 //+kubebuilder:object:root=true

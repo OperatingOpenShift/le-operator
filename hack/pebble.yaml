@@ -1,3 +1,24 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: pebble-config
+  namespace: le-operator-system
+data:
+  pebble-config.json: |
+    {
+      "pebble": {
+        "listenAddress": "0.0.0.0:14000",
+        "managementListenAddress": "0.0.0.0:15000",
+        "certificate": "test/certs/localhost/cert.pem",
+        "privateKey": "test/certs/localhost/key.pem",
+        "httpPort": 80,
+        "tlsPort": 443,
+        "ocspResponderURL": "",
+        "externalAccountBindingRequired": false
+      }
+    }
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -29,6 +50,13 @@ spec:
       - env:
         - name: PEBBLE_VA_NOSLEEP
           value: "1"
+        volumeMounts:
+        - name: pebble-config
+          mountPath: /pebble-config
+        command:
+          - "/usr/bin/pebble"
+          - "-config"
+          - "/pebble-config/pebble-config.json"
         image: letsencrypt/pebble
         imagePullPolicy: Always
         name: pebble
@@ -38,7 +66,10 @@ spec:
       restartPolicy: Always
       schedulerName: default-scheduler
       terminationGracePeriodSeconds: 30
-
+      volumes: 
+        - name: pebble-config
+          configMap:
+            name: pebble-config
 ---
 apiVersion: v1
 kind: Service
