@@ -1,6 +1,6 @@
 # le-operator
 
-This is a noperator to auomatically renew certificates of OpenShift routes.
+This is an operator to auomatically renew certificates of OpenShift routes.
 
 It's currently not considered production-ready and is only built to show-case how simple it is to implement such an operator with [Operator SDK](https://sdk.operatorframework.io/) and [lego](https://github.com/go-acme/lego).
 
